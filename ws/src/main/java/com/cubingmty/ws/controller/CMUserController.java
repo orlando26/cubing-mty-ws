@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.service.CMUserService;
-import com.cubingmty.ws.util.UtilFunctions;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -33,7 +32,7 @@ public class CMUserController {
 	@CrossOrigin
 	@GetMapping
 	public List<CMUser> findAll(){
-		return UtilFunctions.getListFromIteralbe(userService.findAll());
+		return userService.findAll();
 	}
 	
 	@CrossOrigin

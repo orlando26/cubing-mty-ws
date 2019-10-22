@@ -1,5 +1,6 @@
 package com.cubingmty.ws.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,11 @@ public class CMUserService {
 		return userRepository.findById(id);
 	}
 	
-	public Iterable<CMUser> findAll(){
+	public CMUser getOne(Integer id) {
+		return userRepository.getOne(id);
+	}
+	
+	public List<CMUser> findAll(){
 		return userRepository.findAll();
 	}
 	

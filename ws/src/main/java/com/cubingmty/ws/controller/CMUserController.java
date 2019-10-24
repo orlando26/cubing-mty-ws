@@ -2,6 +2,8 @@ package com.cubingmty.ws.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,7 @@ public class CMUserController {
 	
 	@CrossOrigin
 	@PostMapping
-	public StandardResponse<CMUser> save(@RequestBody CMUser user){
+	public StandardResponse<CMUser> save(@Valid @RequestBody CMUser user){
 		System.out.println(user);
 		return userService.save(user);
 	}

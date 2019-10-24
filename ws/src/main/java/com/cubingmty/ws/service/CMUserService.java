@@ -4,16 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.repository.CMUserRepository;
 import com.cubingmty.ws.util.CommonConstants;
-import com.cubingmty.ws.util.UtilFunctions;
 
 @Service
 public class CMUserService {
+	
+	@Autowired
+	public PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private CMUserRepository userRepository;
@@ -21,8 +24,7 @@ public class CMUserService {
 	public StandardResponse<CMUser> save(CMUser user) {
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {
-			user.setPassword(UtilFunctions.hash(user.getPassword()));
-			System.out.println(user);
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			response.setEntity(userRepository.save(user));
 			response.setResponsetext("User saved!");
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);

@@ -11,12 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Builder;
@@ -53,7 +53,10 @@ public class CMUser {
 	@Column(name="Email", unique = true)
 	@NotBlank(message = "Email is mandatory")
 	private String email;
-
+	
+	@Column(name="Img")
+	private String image;
+ 
 	@Column(name="Password")
 	@NotBlank(message = "password is mandatory")
 	private String password;
@@ -68,5 +71,8 @@ public class CMUser {
 	)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<CMRole> roles;
+	
+	@Transient
+    private String token;
 
 }

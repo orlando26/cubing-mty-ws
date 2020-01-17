@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 
+	
 	final static String USERS_QUERY = "select Email, Password, Enabled from cm_user where Email=?";
 
 	final static String AUTHORITIES_QUERY = 
@@ -37,7 +38,7 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.cors().and().authorizeRequests()
 		// Los recursos estáticos no requieren autenticación
 		.antMatchers(
 				"/bootstrap/**",
@@ -55,6 +56,7 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 		.anyRequest().authenticated()
 		// El formulario de Login no requiere autenticacion
 		.and().formLogin().permitAll().and().csrf().disable();
+		
 	}
 
 	@Bean

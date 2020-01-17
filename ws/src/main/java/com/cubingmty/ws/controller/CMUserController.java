@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,6 @@ public class CMUserController {
 	@CrossOrigin
 	@PostMapping
 	public StandardResponse<CMUser> save(@Valid @RequestBody CMUser user){
-		System.out.println(user);
 		return userService.save(user);
 	}
 	
@@ -41,6 +41,12 @@ public class CMUserController {
 	@GetMapping("/{id}")
 	public CMUser findById(@PathVariable("id") Integer id){
 		return userService.findById(id).get();
+	}
+	
+	@CrossOrigin
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable("id") Integer id) {
+		userService.delete(id);
 	}
 	
 	

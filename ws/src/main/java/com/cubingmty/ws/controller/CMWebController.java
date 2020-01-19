@@ -16,4 +16,9 @@ public class CMWebController {
 		return "register";
 	}
 	
+	@GetMapping("/login-page")
+	public String loginPage() {
+		return "login";
+	}
+	
 }

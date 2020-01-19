@@ -1,7 +1,5 @@
 package com.cubingmty.ws.security;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +8,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
-	
+
 	final static String USERS_QUERY = "select Email, Password, Enabled from cm_user where Email=?";
 
 	final static String AUTHORITIES_QUERY = 
@@ -28,12 +27,20 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 					"        WHERE cm_user.Email = ? ";
 
 	@Autowired
-	private DataSource dataSource;
+	private UserDetailsService userDetailsService;
+
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery(USERS_QUERY)
-		.authoritiesByUsernameQuery(AUTHORITIES_QUERY);
+		//		auth.jdbcAuthentication().dataSource(dataSource)
+		//		.usersByUsernameQuery(USERS_QUERY)
+		//		.authoritiesByUsernameQuery(AUTHORITIES_QUERY);
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
@@ -42,28 +49,27 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 		// Los recursos estáticos no requieren autenticación
 		.antMatchers(
 				"/bootstrap/**",
-				"/images/**",
+				"/img/**",
 				"/js/**",
+				"/css/**",
 				"/tinymce/**",
 				"/logos/**").permitAll()
+		.antMatchers("/login*").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/v1/**").permitAll()
 		// Las vistas públicas no requieren autenticación
 		.antMatchers(
 				"/signup",
-				"/search",
 				"/api/**",
-				"/catalog/**",
-				"/vacantes/view/**").permitAll()
+				"/catalog/**").permitAll()
 		// Todas las demás URLs de la Aplicación requieren autenticación
 		.anyRequest().authenticated()
 		// El formulario de Login no requiere autenticacion
-		.and().formLogin().permitAll().and().csrf().disable();
-		
-	}
+		.and()
+		.formLogin()
+		.loginPage("/login-page").permitAll()
+		.and()
+		.csrf().disable();
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 
 

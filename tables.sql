@@ -1,3 +1,6 @@
+-- docker run mysql db container: sudo docker run -v cubingmtydb:/var/lib/mysql --name cubingmtymysql -d -p 3306:3306 --network cubingmtynet -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=cubingmty mysql:5.7.29 --
+
+
 CREATE TABLE `cm_times` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Cm_User_Id` int(11) NOT NULL,
@@ -14,8 +17,9 @@ CREATE TABLE `cm_user` (
   `Name` varchar(50) NOT NULL,
   `WCAID` varchar(150) NOT NULL,
   `Email` varchar(50) NOT NULL,
-  `Password` varchar(100) NOT NULL
-  `Enabled` TINYINT(1) DEFAULT 1 NOT NULL
+  `Password` varchar(100) NOT NULL,
+  `Enabled` TINYINT(1) DEFAULT 1 NOT NULL,
+  UNIQUE KEY `cm_user_idx_1` (`Email`),
   PRIMARY KEY (`Id`)
 ) 
 

@@ -43,6 +43,7 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 		.antMatchers(
 				"/bootstrap/**",
 				"/images/**",
+				"/js/**",
 				"/tinymce/**",
 				"/logos/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/v1/**").permitAll()
@@ -51,6 +52,7 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter{
 				"/signup",
 				"/search",
 				"/api/**",
+				"/catalog/**",
 				"/vacantes/view/**").permitAll()
 		// Todas las demás URLs de la Aplicación requieren autenticación
 		.anyRequest().authenticated()

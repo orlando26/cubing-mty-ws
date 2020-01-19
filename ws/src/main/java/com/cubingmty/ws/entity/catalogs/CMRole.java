@@ -1,4 +1,4 @@
-package com.cubingmty.ws.entity;
+package com.cubingmty.ws.entity.catalogs;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

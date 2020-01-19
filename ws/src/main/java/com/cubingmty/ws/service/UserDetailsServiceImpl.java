@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.cubingmty.ws.entity.CMRole;
 import com.cubingmty.ws.entity.CMUser;
+import com.cubingmty.ws.entity.catalogs.CMRole;
 import com.cubingmty.ws.repository.CMUserRepository;
 
 public class UserDetailsServiceImpl implements UserDetailsService{

@@ -23,6 +23,7 @@ public class CMUserService {
 	private CMUserRepository userRepository;
 	
 	public StandardResponse<CMUser> save(CMUser user) {
+		user.setEnabled(1);
 		user.setImage("avatar.png");
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {

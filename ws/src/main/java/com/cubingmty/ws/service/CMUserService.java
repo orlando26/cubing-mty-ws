@@ -43,6 +43,10 @@ public class CMUserService {
 		return response;
 	}
 	
+	public CMUser findByEmail(String email) {
+		return userRepository.findByEmail(email).orElse(null);
+	}
+	
 	public void delete(Integer id) {
 		userRepository.deleteById(id);
 	}

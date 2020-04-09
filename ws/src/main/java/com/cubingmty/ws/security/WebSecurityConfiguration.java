@@ -3,7 +3,6 @@ package com.cubingmty.ws.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,10 +11,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.cubingmty.ws.jwt.JWTAuthorizationFilter;
+import com.cubingmty.ws.jwt.JwtTokenProvider;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
-
+	
+	@Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
 	final static String USERS_QUERY = "select Email, Password, Enabled from cm_user where Email=?";
 
@@ -46,30 +50,22 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().authorizeRequests()
-		// Los recursos estáticos no requieren autenticación
-		.antMatchers(
-				"/bootstrap/**",
-				"/img/**",
-				"/js/**",
-				"/css/**",
-				"/tinymce/**",
-				"/logos/**").permitAll()
-		.antMatchers("/login*").permitAll()
-		.antMatchers(HttpMethod.POST,"/api/v1/**").permitAll()
 		// Las vistas públicas no requieren autenticación
 		.antMatchers(
-				"/signup",
-				"/api/**",
+				"/api/v1/user/registration",	
+				"/swagger-ui.html",
 				"/catalog/**").permitAll()
 		// Todas las demás URLs de la Aplicación requieren autenticación
-		.anyRequest().authenticated()
+		.anyRequest().fullyAuthenticated()
 		// El formulario de Login no requiere autenticacion
 		.and()
 		.formLogin()
-		.loginPage("/login-page").permitAll()
+		.loginPage("/api/v1/user/login").permitAll() 
 		.and()
 		.csrf().disable();
-
+		
+		//jwt filter
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtTokenProvider));
 	}
 
 

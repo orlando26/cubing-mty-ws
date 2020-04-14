@@ -4,4 +4,4 @@ LABEL maintainer="Orlando Loza Castro orlandolozaarr@gmail.com"
 
 COPY ./target/ws-0.0.1-SNAPSHOT.jar cubingmty.jar
 
-CMD ["java", "-jar", "cubingmty.jar"]
+CMD ["java", "-jar",  "-Dspring.profiles.active=docker", "cubingmty.jar"]

@@ -52,9 +52,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.cors().and().authorizeRequests()
 		// Las vistas públicas no requieren autenticación
 		.antMatchers(
-				"/api/v1/user/registration",	
-				"/swagger-ui.html",
+				"/api/v1/**",	
 				"/catalog/**").permitAll()
+		//Swagger
+		.antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**").permitAll()
 		// Todas las demás URLs de la Aplicación requieren autenticación
 		.anyRequest().fullyAuthenticated()
 		// El formulario de Login no requiere autenticacion

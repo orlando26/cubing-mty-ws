@@ -31,15 +31,7 @@ public class WsApplication {
 				.apiInfo(getApiInformation());
 	}
 	
-	@Bean
-	public Docket swaggerCatalogsConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("catalogs")
-				.select()
-				.paths(PathSelectors.regex("/catalog.*"))
-				.build()
-				.apiInfo(getCatalogApiInformation());
-	}
+
 	
 	
 	

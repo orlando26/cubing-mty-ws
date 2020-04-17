@@ -32,7 +32,15 @@ public class WsApplication {
 	}
 	
 
-	
+	@Bean
+	public Docket swaggerConfigurationCatalogs() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("cubingmty-catalogs")
+				.select()
+				.paths(PathSelectors.regex("/catalog.*")) 
+				.build()
+				.apiInfo(getCatalogApiInformation());
+	}
 	
 	
 

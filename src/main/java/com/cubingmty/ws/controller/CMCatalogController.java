@@ -1,6 +1,7 @@
 package com.cubingmty.ws.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,21 +11,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cubingmty.ws.entity.catalogs.CMRole;
 import com.cubingmty.ws.repository.CMRoleRepository;
+import com.cubingmty.ws.service.CMCubeService;
 
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping("/catalog/roles")
-@Api(tags = "Roles Catalog API", value = "RoleCatalog", description = "role catalog documentation")
-public class CMRoleController {
+@RequestMapping("/catalog")
+@Api(tags = "Catalog API", value = "Catalog", description = "catalogs documentation")
+public class CMCatalogController {
+	
+	@Autowired
+	private CMCubeService cubeService;
 	
 	@Autowired
 	private CMRoleRepository roleRepository;
 	
-	@GetMapping
+	@GetMapping("/roles")
 	@CrossOrigin
 	public List<CMRole> getAllRoles(){
 		return roleRepository.findAll();
+	}
+	
+	@GetMapping("/cubes")
+	@CrossOrigin
+	public List<String> getCubes(){
+		return cubeService.getCubesList();
 	}
 	
 }

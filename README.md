@@ -21,7 +21,7 @@ sudo docker network create --driver bridge cubingmtynet
 sudo docker run -d -p 3306:3306 --name cubosdb --network cubingmtynet -e MYSQL_ROOT_PASSWORD=password orlandoloza/cubos-mysql
 ```
 
-* import pom.xml located in ednamoda-ws folder as maven project in STS.
+* import pom.xml located in cubing-mty-ws folder as maven project in STS.
 
 * to run application in docker: 
 

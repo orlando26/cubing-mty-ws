@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor 
 public class StandardResponse<T> {
 	
 	private String status;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "cm_roles")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class CMRole {
 	
 	@Id
@@ -31,6 +31,11 @@ public class CMRole {
 		super();
 		this.id = id;
 		this.role = role;
+	}
+
+	public CMRole(Integer id){
+		super();
+		this.id = id;
 	}
 	
 	

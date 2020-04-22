@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cubingmty.ws.entity.CMUser;
@@ -44,6 +45,13 @@ public class CMUserController {
 		return userService.save(user);
 	}
 
+	@CrossOrigin
+	@PostMapping("/saveTestUser")
+	@ApiOperation(value = "Creates a user for testing purposes")
+	public StandardResponse<CMUser> saveTestUser(@RequestParam String name, @RequestParam String password, @RequestParam String wcaid){
+		return userService.registerTestUser(name, password, wcaid);
+	}
+
 	@GetMapping("/login")
 	public ResponseEntity<?> getUser(Principal principal){
 
@@ -54,7 +62,7 @@ public class CMUserController {
 		UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
 		CMUser user = userService.findByEmail(authenticationToken.getName()); 
 		 
-		user.setToken(tokenProvider.generateToken(authenticationToken));
+		user.setToken(tokenProvider.generateToken(authenticationToken)); 
 
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}

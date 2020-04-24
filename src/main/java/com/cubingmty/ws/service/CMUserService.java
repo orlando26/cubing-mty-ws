@@ -1,6 +1,7 @@
 package com.cubingmty.ws.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,6 @@ public class CMUserService {
 	private CMUserRepository userRepository;
 	
 	public StandardResponse<CMUser> save(CMUser user) {
-		user.setEnabled(1);
 		user.setImage("avatar.png");
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {
@@ -52,8 +52,10 @@ public class CMUserService {
 		.email(name + "@a.com")
 		.password(password)
 		.wcaId(wcaid)
+		.stateId(19)
+		.cityId(986)
+		.birthday(new Date())
 		.build();
-		user.setEnabled(1);
 		user.setImage("avatar.png");
 		List<CMRole> roles = new ArrayList<>();
 		roles.add(new CMRole(3));

@@ -1,36 +1,36 @@
 package com.cubingmty.ws.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.Type;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "cm_times")
+@Entity(name = "cm_solves")
 @Data
 @NoArgsConstructor
-@Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CMTimes {
+public class CMSolves {
 	
-	public CMTimes(Integer id, CMUser userId, Integer time, String scramble, Boolean dnf, Integer penalties) {
-		super();
-		this.id = id;
+	@Builder
+	public CMSolves(Integer userId, Integer time, String scramble, String cube, Boolean dnf, Boolean plus2, Date date) {
 		this.userId = userId;
 		this.time = time;
 		this.scramble = scramble;
+		this.cube = cube;
 		this.dnf = dnf;
-		this.penalties = penalties;
+		this.plus2 = plus2;
+		this.date = date;
 	}
 
 	@Id
@@ -38,9 +38,8 @@ public class CMTimes {
 	@Column(name="Id")
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "Cm_User_Id")
-	private CMUser userId;
+	@Column(name = "Id_User")
+	private Integer userId;
 	 
 	@Column(name="time")
 	private Integer time;
@@ -48,11 +47,20 @@ public class CMTimes {
 	@Column(name = "scramble")
 	private String scramble;
 	
+	@Column(name = "cube")
+	private String cube;
+	
 	@Column(name = "DNF")
 	@Type(type = "yes_no")
 	private Boolean dnf;
+
+	@Column(name = "Plus2")
+	@Type(type = "yes_no")
+	private Boolean plus2;
 	
-	@Column(name = "Penalities")
-	private Integer penalties;
+	@Column(name = "date")
+	private Date date;
+
+	
 
 }

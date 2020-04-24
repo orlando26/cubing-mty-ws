@@ -62,9 +62,6 @@ public class CMUser {
 	@NotBlank(message = "password is mandatory")
 	private String password;
 	
-	@Column(name="Enabled")
-	private Integer enabled;
-	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "cm_user_roles", // tabla intermedia
 			joinColumns = @JoinColumn(name = "Id_User"), // foreignKey en la tabla de UsuarioPerfil

@@ -1,6 +1,6 @@
-INSERT INTO STATE(Name, Abbrev)
+INSERT INTO cm_state(Name, Abbrev)
 values 
- ('Aguascalientes', 'Ags.')
+ ('Aguascalientes', 'Ags.'),
  ('Baja California', 'BC'),
  ('Baja California Sur', 'BCS'),
  ('Campeche', 'Camp.'),

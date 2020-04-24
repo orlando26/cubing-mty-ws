@@ -26,7 +26,6 @@ public class CMUserService {
 	private CMUserRepository userRepository;
 	
 	public StandardResponse<CMUser> save(CMUser user) {
-		user.setEnabled(1);
 		user.setImage("avatar.png");
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {
@@ -53,7 +52,6 @@ public class CMUserService {
 		.password(password)
 		.wcaId(wcaid)
 		.build();
-		user.setEnabled(1);
 		user.setImage("avatar.png");
 		List<CMRole> roles = new ArrayList<>();
 		roles.add(new CMRole(3));

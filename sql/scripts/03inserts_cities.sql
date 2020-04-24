@@ -1,4 +1,4 @@
-insert into CITY(Id_State, Name)
+insert into cm_city(Id_State, Name)
 values 
 (01, 'Aguascalientes'),
 (01, 'Asientos'),

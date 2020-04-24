@@ -29,13 +29,16 @@ CREATE TABLE `cm_user` (
   `Name` varchar(50) NOT NULL,
   `WCAID` varchar(150) NOT NULL,
   `Email` varchar(50) NOT NULL,
-  `State` varchar(50) NOT NULL,
-  `City` varchar(50) NOT NULL,
-  `Bidthday` DATETIME NOT NULL,
+  `State_Id` int NOT NULL,
+  `City_Id` int NOT NULL,
+  `Birthday` DATETIME NOT NULL,
   `Password` varchar(100) NOT NULL,
   `Img` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `cm_user_idx_1` (`Email`)
+  UNIQUE KEY `cm_user_idx_1` (`Email`),
+  UNIQUE KEY `cm_user_idx_2` (`WCAID`),
+  CONSTRAINT `cm_user_ibfk_1` FOREIGN KEY (`State_Id`) REFERENCES `cm_state` (`Id`),
+  CONSTRAINT `cm_user_ibfk_2` FOREIGN KEY (`City_Id`) REFERENCES `cm_city` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cm_tourney` (

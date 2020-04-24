@@ -1,6 +1,7 @@
 package com.cubingmty.ws.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,9 @@ public class CMUserService {
 		.email(name + "@a.com")
 		.password(password)
 		.wcaId(wcaid)
+		.stateId(19)
+		.cityId(986)
+		.birthday(new Date())
 		.build();
 		user.setImage("avatar.png");
 		List<CMRole> roles = new ArrayList<>();

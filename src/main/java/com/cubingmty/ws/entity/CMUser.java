@@ -1,5 +1,6 @@
 package com.cubingmty.ws.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -27,41 +28,53 @@ import lombok.NoArgsConstructor;
 @Entity(name = "cm_user")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class CMUser {
 
 	@Builder()
-	public CMUser(String name, String wcaId, String email, String password) {
+	public CMUser(String name, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
 		this.name = name;
 		this.wcaId = wcaId;
 		this.email = email;
+		this.stateId = stateId;
+		this.cityId = cityId;
+		this.birthday = birthday;
 		this.password = password;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="Id")
+	@Column(name = "Id")
 	private Integer id;
 
-	@Column(name="Name")
+	@Column(name = "Name")
 	@NotBlank(message = "Name is mandatory")
 	private String name;
 
-	@Column(name="WCAID", unique = true)
+	@Column(name = "WCAID", unique = true)
 	@NotBlank(message = "wcaId is mandatory")
 	private String wcaId;
 
-	@Column(name="Email", unique = true)
+	@Column(name = "Email", unique = true)
 	@NotBlank(message = "Email is mandatory")
 	private String email;
-	
-	@Column(name="Img")
+
+	@Column(name = "State_Id")
+	private Integer stateId;
+
+	@Column(name = "City_Id")
+	private Integer cityId;
+
+	@Column(name = "Birthday")
+	private Date birthday;
+
+	@Column(name = "Img")
 	private String image;
- 
-	@Column(name="Password")
+
+	@Column(name = "Password")
 	@NotBlank(message = "password is mandatory")
 	private String password;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "cm_user_roles", // tabla intermedia
 			joinColumns = @JoinColumn(name = "Id_User"), // foreignKey en la tabla de UsuarioPerfil
@@ -69,8 +82,8 @@ public class CMUser {
 	)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<CMRole> roles;
-	
+
 	@Transient
-    private String token;
+	private String token;
 
 }

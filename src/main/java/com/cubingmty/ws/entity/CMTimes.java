@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Type;
 
@@ -23,14 +23,16 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CMTimes {
 	
-	public CMTimes(Integer id, CMUser userId, Integer time, String scramble, Boolean dnf, Integer penalties) {
+	public CMTimes(Integer id, Integer userId, Double time, String scramble, Boolean dnf, Boolean plus, String date) {//CMComp tourney
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.time = time;
 		this.scramble = scramble;
 		this.dnf = dnf;
-		this.penalties = penalties;
+		this.plus = plus;
+		this.date = date;
+		//this.tourney = tourney;
 	}
 
 	@Id
@@ -38,21 +40,28 @@ public class CMTimes {
 	@Column(name="Id")
 	private Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "Cm_User_Id")
-	private CMUser userId;
+	//@ManyToOne
+	@Column(name = "Id_User")
+	private Integer userId;
 	 
-	@Column(name="time")
-	private Integer time;
+	@Column(name="Time")
+	private Double time;
 	
-	@Column(name = "scramble")
+	@Column(name = "Cube")
 	private String scramble;
 	
 	@Column(name = "DNF")
 	@Type(type = "yes_no")
 	private Boolean dnf;
 	
-	@Column(name = "Penalities")
-	private Integer penalties;
+	@Column(name = "Plus2")
+	@Type(type = "yes_no")
+	private Boolean plus;
+	
+	@Column(name = "Date")
+	private String date;
+	
+	//@Column(name = "tourney")
+	//private CMComp tourney;
 
 }

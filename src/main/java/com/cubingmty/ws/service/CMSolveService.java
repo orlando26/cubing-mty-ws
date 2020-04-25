@@ -1,17 +1,16 @@
 package com.cubingmty.ws.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.cubingmty.ws.entity.CMTimes;
-//import com.cubingmty.ws.entity.CMUser;
+import com.cubingmty.ws.entity.CMSolves;
 import com.cubingmty.ws.entity.StandardResponse;
-import com.cubingmty.ws.repository.CMTimesRepository;
+import com.cubingmty.ws.repository.CMSolvesRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
 import org.springframework.data.domain.Sort;
@@ -22,12 +21,12 @@ public class CMSolveService {
 	
 	
 	@Autowired
-	private CMTimesRepository solveRepository;
+	private CMSolvesRepository solveRepository;
 	
 	
 	
-	public StandardResponse<CMTimes> save(CMTimes solve) {
-		StandardResponse<CMTimes> response = new StandardResponse<CMTimes>();
+	public StandardResponse<CMSolves> save(CMSolves solve) {
+		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
 		try {
 			response.setEntity(solveRepository.save(solve));
 			response.setResponsetext("Solve saved!");
@@ -41,17 +40,17 @@ public class CMSolveService {
 	}
 	
 
-	public StandardResponse<CMTimes> registerTestSolve(Double time){
-		CMTimes solve = CMTimes.builder()
-		.id(1)
-		.userId(1)
+	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time){
+		CMSolves solve = CMSolves.builder()
+		.userId(userId)
 		.time(time)
 		.scramble("U B D")
+		.cube("3x3x3")
 		.dnf(true)
-		.plus(false)
-		.date("Hoy")
+		.plus2(false)
+		.date(new Date())
 		.build();
-		StandardResponse<CMTimes> response = new StandardResponse<CMTimes>();
+		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
 		try {
 			response.setEntity(solveRepository.save(solve));
 			response.setResponsetext("Solve saved!");
@@ -64,34 +63,32 @@ public class CMSolveService {
 		return response;
 	}
 	
-	//public CMTimes findByTourney(String email) {
-	//	return solveRepository.findByTourney(email).orElse(null);
-	//}
 	
-	//public CMTimes findByUserId(Integer userId) {
-	//	return solveRepository.findByUserId(userId).orElse(null);
-	//}
-	
-	public List<CMTimes> findAll() {
+	public List<CMSolves> findAll() {
 		return solveRepository.findAll();
 	}
 	
-	public List<CMTimes> findAllSorted() {
-		return solveRepository.findAll(Sort.by("time").ascending());
-	}
+	//public List<CMSolves> findAllSorted() {
+	//	return solveRepository.findAll(Sort.by("time").ascending());
+	//}
 	
 	public void delete(Integer id) {
 		solveRepository.deleteById(id);
 	}
 	
-	public Optional<CMTimes> findById(Integer id) {
+	public Optional<CMSolves> findById(Integer id) {
 		return solveRepository.findById(id);
 	}
 	
-	public CMTimes getOne(Integer id) {
+	public CMSolves getOne(Integer id) {
 		return solveRepository.getOne(id);
 	}
 	
+	
+	public List<CMSolves> getSolveByUser(Integer userId){
+		List<CMSolves> list = solveRepository.findByUserId(userId);
+		return list;
+	}
 	
 	
 	

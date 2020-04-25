@@ -1,6 +1,7 @@
 package com.cubingmty.ws.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cubingmty.ws.entity.CMTimes;
+import com.cubingmty.ws.entity.CMSolves;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.service.CMSolveService;
 
@@ -33,44 +34,45 @@ public class CMSolveController {
 	
 	@CrossOrigin
 	@PostMapping("/saveSolve")
-	public StandardResponse<CMTimes> save(@Valid @RequestBody CMTimes solve){
+	public StandardResponse<CMSolves> save(@Valid @RequestBody CMSolves solve){
 		return solveService.save(solve);
 	}
 
 	
 	@CrossOrigin
 	@PostMapping("/saveSolveUser")
-	public StandardResponse<CMTimes> saveTestSolve(@RequestParam Double time){
-		return solveService.registerTestSolve(time);
+	public StandardResponse<CMSolves> saveTestSolve(@RequestParam Integer userId, @RequestParam Integer time){
+		return solveService.registerTestSolve(userId, time);
 	}
 
-
-	//@CrossOrigin
-	//@GetMapping
-	//@ApiOperation(value = "List all solves")
-	//public List<CMTimes> findAll(){
-	//	return solveService.findAll();
-	//}
-	
 	@CrossOrigin
 	@GetMapping
-	@ApiOperation(value = "List all solves sorted")
-	public List<CMTimes> findAllSorted(){
-		return solveService.findAllSorted();
+	@ApiOperation(value = "List all solves")
+	public List<CMSolves> findAll(){
+		return solveService.findAll();
 	}
-
+	
+	
 	@CrossOrigin
 	@GetMapping("/{id}")
-	@ApiOperation(value = "find a time by its Id")
-	public CMTimes findById(@PathVariable("id") Integer id){
+	@ApiOperation(value = "Find a time by its Id")
+	public CMSolves findById(@PathVariable("id") Integer id){
 		return solveService.findById(id).get();
 	}
 
 	@CrossOrigin
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "delete a solve by its Id")
+	@ApiOperation(value = "Delete a solve by its Id")
 	public void delete(@PathVariable("id") Integer id) {
 		solveService.delete(id);
+	}
+	
+	
+	@CrossOrigin
+	@GetMapping("/userId")
+	@ApiOperation(value = "Find a solve by user")
+	public List<CMSolves> getSolveByUser(@PathVariable("userId") Integer userId){
+		return solveService.getSolveByUser(userId);
 	}
 
 

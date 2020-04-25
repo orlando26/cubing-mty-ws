@@ -12,8 +12,6 @@ import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.hibernate.annotations.Type;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +32,13 @@ public class CMSolves {
 		this.plus2 = plus2;
 		this.date = date;
 	}
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="Id")
+	private Integer id;
+
 
 	@Column(name = "Id_User")
 	private Integer userId;
@@ -41,10 +46,10 @@ public class CMSolves {
 	@Column(name="Time")
 	private Integer time;
 	
-	@Column(name = "Cube")
+	@Column(name = "Scramble")
 	private String scramble;
 	
-	@Column(name = "cube")
+	@Column(name = "Cube")
 	private String cube;
 	
 	@Column(name = "DNF")
@@ -55,8 +60,7 @@ public class CMSolves {
 	@Type(type = "yes_no")
 	private Boolean plus2;
 	
-	@Column(name = "date")
+	@Column(name = "Date")
 	private Date date;
-
 
 }

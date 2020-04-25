@@ -13,9 +13,6 @@ import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.repository.CMSolvesRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
-import org.springframework.data.domain.Sort;
-
-
 @Service
 public class CMSolveService {
 	
@@ -40,12 +37,12 @@ public class CMSolveService {
 	}
 	
 
-	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time){
+	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time, String cube){
 		CMSolves solve = CMSolves.builder()
 		.userId(userId)
 		.time(time)
 		.scramble("U B D")
-		.cube("3x3x3")
+		.cube(cube)
 		.dnf(true)
 		.plus2(false)
 		.date(new Date())
@@ -90,6 +87,31 @@ public class CMSolveService {
 		return list;
 	}
 	
+	public List<CMSolves> getSolveByCube(String cube){
+		List<CMSolves> list = solveRepository.findByCube(cube);
+		return list;
+	}
 	
+	
+	public List<CMSolves> getSolveByUserAndCube(Integer userId, String cube){
+		List<CMSolves> list = solveRepository.findByUserIdAndCube(userId, cube);
+		return list;
+	}
+	
+	
+	public List<CMSolves> getByCubeOrderByTime(String cube){
+		List<CMSolves> list = solveRepository.findByCubeOrderByTimeAsc(cube);
+		return list;
+	}
+	
+	public List<CMSolves> getByCubeOrderByDate(String cube){
+		List<CMSolves> list = solveRepository.findByCubeOrderByDateAsc(cube);
+		return list;
+	}
+	
+	
+	public List<CMSolves> findAllByOrderByTime() {
+		return solveRepository.findAllByOrderByTimeAsc();
+	}
 	
 }

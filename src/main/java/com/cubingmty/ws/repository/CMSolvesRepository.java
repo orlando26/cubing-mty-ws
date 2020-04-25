@@ -10,5 +10,15 @@ import com.cubingmty.ws.entity.CMSolves;
 public interface CMSolvesRepository extends JpaRepository<CMSolves, Integer>{
 	
 	public List<CMSolves> findByUserId(Integer userId);
+	
+	public List<CMSolves> findByCube(String cube);
+	
+	public List<CMSolves> findByUserIdAndCube(Integer userId, String cube);
+	
+	public List<CMSolves> findAllByOrderByTimeAsc();
+	
+	public List<CMSolves> findByCubeOrderByTimeAsc(String cube);
+	
+	public List<CMSolves> findByCubeOrderByDateAsc(String cube);
 
 }

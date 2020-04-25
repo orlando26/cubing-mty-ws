@@ -15,11 +15,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import com.cubingmty.ws.entity.catalogs.CMRole;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import com.cubingmty.ws.entity.catalogs.CMRole;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Builder;
 import lombok.Data;
@@ -65,6 +66,7 @@ public class CMUser {
 	@Column(name = "City_Id")
 	private Integer cityId;
 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name = "Birthday")
 	private Date birthday;
 

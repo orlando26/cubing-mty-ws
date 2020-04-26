@@ -49,15 +49,12 @@ public class CMUser {
 	private Integer id;
 
 	@Column(name = "Name")
-	@NotBlank(message = "Name is mandatory")
 	private String name;
 
 	@Column(name = "WCAID", unique = true)
-	@NotBlank(message = "wcaId is mandatory")
 	private String wcaId;
 
 	@Column(name = "Email", unique = true)
-	@NotBlank(message = "Email is mandatory")
 	private String email;
 
 	@Column(name = "State_Id")
@@ -66,7 +63,7 @@ public class CMUser {
 	@Column(name = "City_Id")
 	private Integer cityId;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name = "Birthday")
 	private Date birthday;
 
@@ -74,7 +71,6 @@ public class CMUser {
 	private String image;
 
 	@Column(name = "Password")
-	@NotBlank(message = "password is mandatory")
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -87,5 +83,17 @@ public class CMUser {
 
 	@Transient
 	private String token;
+
+	public boolean checkEmpty(){
+		if(name.equals("") || 
+			email.equals("") ||
+			wcaId.equals("") ||
+			password.equals("") ||
+			stateId.equals(null) ||
+			cityId.equals(null) ||
+			birthday.equals(null) ) return true;
+		
+		return false;
+	}
 
 }

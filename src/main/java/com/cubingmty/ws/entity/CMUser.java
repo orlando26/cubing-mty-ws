@@ -33,11 +33,9 @@ import lombok.NoArgsConstructor;
 public class CMUser {
 
 	@Builder()
-	public CMUser(String name, String lastname, String wcaId, String nickname, String email, Integer stateId, Date birthday, Integer cityId, String password) {
+	public CMUser(String name, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
 		this.name = name;
-		this.lastname = lastname;
 		this.wcaId = wcaId;
-		this.nickname = nickname;
 		this.email = email;
 		this.stateId = stateId;
 		this.cityId = cityId;
@@ -56,7 +54,7 @@ public class CMUser {
 	@Column(name = "Lastname")
 	private String lastname;
 	
-	@Column(name = "Nickname", unique = true)
+	@Column(name = "Nickname")
 	private String nickname;
 
 	
@@ -95,8 +93,6 @@ public class CMUser {
 
 	public boolean checkEmpty(){
 		if(name.equals("") || 
-			(lastname.equals("") || 
-			(nickname.equals("") || 
 			email.equals("") ||
 			wcaId.equals("") ||
 			password.equals("") ||

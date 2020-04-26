@@ -55,8 +55,6 @@ public class CMUserService {
 	public StandardResponse<CMUser> registerTestUser(String name, String password, String wcaid){
 		CMUser user = CMUser.builder()
 		.name(name)
-		.lastname(name)
-		.nickname(name)
 		.email(name + "@a.com")
 		.password(password)
 		.wcaId(wcaid)

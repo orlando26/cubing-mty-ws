@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.entity.catalogs.CMRole;
+import com.cubingmty.ws.exceptions.EmptyValuesException;
 import com.cubingmty.ws.repository.CMUserRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
@@ -28,11 +29,16 @@ public class CMUserService {
 	
 	public StandardResponse<CMUser> save(CMUser user) {
 		user.setImage("avatar.png");
+		List<CMRole> roles = new ArrayList<>();
+		roles.add(new CMRole(3));
+		user.setRoles(roles);
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {
+			if(user.checkEmpty()) throw new EmptyValuesException();
+
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			response.setEntity(userRepository.save(user));
-			response.setResponsetext("User saved!");
+			response.setResponsetext("Usuario registrado!");
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);
 		} catch(DataIntegrityViolationException cve) {
 			response.setEntity(user);
@@ -40,7 +46,7 @@ public class CMUserService {
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		} catch (Exception e) {
 			response.setEntity(user);
-			response.setResponsetext(e.toString());
+			response.setResponsetext(e.getMessage());
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		}
 		return response;

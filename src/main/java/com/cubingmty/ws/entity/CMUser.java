@@ -51,6 +51,13 @@ public class CMUser {
 	@Column(name = "Name")
 	private String name;
 
+	@Column(name = "Lastname")
+	private String lastname;
+	
+	@Column(name = "Nickname")
+	private String nickname;
+
+	
 	@Column(name = "WCAID", unique = true)
 	private String wcaId;
 
@@ -91,7 +98,7 @@ public class CMUser {
 			password.equals("") ||
 			stateId.equals(null) ||
 			cityId.equals(null) ||
-			birthday.equals(null) ) return true;
+			birthday.equals(null) ) return true; 
 		
 		return false;
 	}

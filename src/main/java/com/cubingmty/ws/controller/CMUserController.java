@@ -41,7 +41,7 @@ public class CMUserController {
 	@CrossOrigin
 	@PostMapping("/registration")
 	@ApiOperation(value = "Creates a user")
-	public StandardResponse<CMUser> save(@Valid @RequestBody CMUser user){
+	public StandardResponse<CMUser> save(@RequestBody CMUser user){
 		return userService.save(user);
 	}
 

@@ -1,10 +1,11 @@
+set names 'utf8';
 INSERT INTO cm_state(Name, Abbrev)
 values 
 --  ('Aguascalientes', 'Ags.'),
 --  ('Baja California', 'BC'),
 --  ('Baja California Sur', 'BCS'),
 --  ('Campeche', 'Camp.'),
- ('Coahuila de Zaragoza', 'Coah.'),
+ ('Coahuila de Zaragoza', 'Coah.'), 
 --  ('Colima', 'Col.'),
 --  ('Chiapas', 'Chis.'),
 --  ('Chihuahua', 'Chih.'),
@@ -18,7 +19,7 @@ values
 --  ('Michoacán de Ocampo', 'Mich.'),
 --  ('Morelos', 'Mor.'),
 --  ('Nayarit', 'Nay.'),
- ('Nuevo León', 'NL'),
+ ('Nuevo León', 'NL'), 
 --  ('Oaxaca', 'Oax.'),
 --  ('Puebla', 'Pue.'),
 --  ('Querétaro', 'Qro.'),
@@ -27,7 +28,7 @@ values
 --  ('Sinaloa', 'Sin.'),
 --  ('Sonora', 'Son.'),
 --  ('Tabasco', 'Tab.'),
- ('Tamaulipas', 'Tamps.');
+ ('Tamaulipas', 'Tamps.'); 
 --  ('Tlaxcala', 'Tlax.'),
 --  ('Veracruz de Ignacio de la Llave', 'Ver.'),
 --  ('Yucatán', 'Yuc.'),

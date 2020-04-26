@@ -95,8 +95,8 @@ public class CMUser {
 
 	public boolean checkEmpty(){
 		if(name.equals("") || 
-			(lastname.equals("") || 
-			(nickname.equals("") || 
+			lastname.equals("") || 
+			nickname.equals("") || 
 			email.equals("") ||
 			wcaId.equals("") ||
 			password.equals("") ||

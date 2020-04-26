@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS cm_state(
 	Abbrev VARCHAR(10) NOT NULL,
 
 	primary key(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS cm_city(
 	Id int not null auto_increment,
@@ -22,11 +22,13 @@ CREATE TABLE IF NOT EXISTS cm_city(
 	FOREIGN KEY(Id_State) REFERENCES cm_state(Id),
 
 	PRIMARY KEY(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `cm_user` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
+  `Lastname` varchar(50) NOT NULL,
+  `Nickname` varchar(50) NOT NULL,
   `WCAID` varchar(150) NOT NULL,
   `Email` varchar(50) NOT NULL,
   `State_Id` int NOT NULL,

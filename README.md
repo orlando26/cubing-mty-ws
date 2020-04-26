@@ -4,6 +4,10 @@
 
 RESTful api web services project for Cubing MTY app.
 
+### cubing-mty db ER diagram
+
+![ER diagram](sql/cubos-ER.png)
+
 
 ## How do I get set up? 
 

@@ -39,7 +39,6 @@ CREATE TABLE `cm_user` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `cm_user_idx_1` (`Email`),
   UNIQUE KEY `cm_user_idx_2` (`WCAID`),
-  UNIQUE KEY `cm_user_idx_3` (`Nickname`),
   CONSTRAINT `cm_user_ibfk_1` FOREIGN KEY (`State_Id`) REFERENCES `cm_state` (`Id`),
   CONSTRAINT `cm_user_ibfk_2` FOREIGN KEY (`City_Id`) REFERENCES `cm_city` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

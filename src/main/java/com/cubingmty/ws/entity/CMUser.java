@@ -94,15 +94,9 @@ public class CMUser {
 	private String token;
 
 	public boolean checkEmpty(){
-<<<<<<< HEAD
-		if(name.equals("") ||
-			lastname.equals("") ||
-			nickname.equals("") ||
-=======
 		if(name.equals("") || 
 			lastname.equals("") || 
 			nickname.equals("") || 
->>>>>>> 8ce9df3596dc64bac012cbb880a472fb810f7fbb
 			email.equals("") ||
 			wcaId.equals("") ||
 			password.equals("") ||

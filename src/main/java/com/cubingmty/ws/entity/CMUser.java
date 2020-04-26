@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 public class CMUser {
 
 	@Builder()
-	public CMUser(String name, String lastname, string nickname, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
+	public CMUser(String name, String lastname, String nickname, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
 		this.name = name;
 		this.lastname = lastname;
 		this.nickname = nickname;
@@ -94,9 +94,15 @@ public class CMUser {
 	private String token;
 
 	public boolean checkEmpty(){
+<<<<<<< HEAD
 		if(name.equals("") ||
 			lastname.equals("") ||
 			nickname.equals("") ||
+=======
+		if(name.equals("") || 
+			lastname.equals("") || 
+			nickname.equals("") || 
+>>>>>>> 8ce9df3596dc64bac012cbb880a472fb810f7fbb
 			email.equals("") ||
 			wcaId.equals("") ||
 			password.equals("") ||

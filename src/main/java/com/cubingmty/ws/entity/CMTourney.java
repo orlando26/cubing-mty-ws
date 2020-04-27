@@ -29,11 +29,9 @@ public class CMTourney {
 	@Column(name = "Name")
     private String name;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "startDate")
     private Date startDate;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "endDate")
     private Date endDate;
 }

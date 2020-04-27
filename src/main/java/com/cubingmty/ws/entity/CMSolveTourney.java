@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,5 +27,13 @@ public class CMSolveTourney {
     private Integer solveId;
 
     @Column(name = "Id_Tourney")
-    private Integer TourneyId;
+    private Integer tourneyId;
+
+    @Builder
+    public CMSolveTourney(Integer solveId, Integer tourneyId) {
+        this.solveId = solveId;
+        this.tourneyId = tourneyId;
+    }
+
+    
 }

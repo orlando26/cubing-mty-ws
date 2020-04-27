@@ -1,15 +1,20 @@
 package com.cubingmty.ws.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.cubingmty.ws.entity.CMSolveTourney;
 import com.cubingmty.ws.entity.CMSolves;
 import com.cubingmty.ws.entity.StandardResponse;
+import com.cubingmty.ws.repository.CMSolveTourneyRepository;
 import com.cubingmty.ws.repository.CMSolvesRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
@@ -19,25 +24,48 @@ public class CMSolveService {
 	
 	@Autowired
 	private CMSolvesRepository solveRepository;
+
+	@Autowired
+	private CMSolveTourneyRepository solveTorneyRepository;
 	
 	
 	
-	public StandardResponse<CMSolves> save(CMSolves solve) {
+	public StandardResponse<CMSolves> save(CMSolves solve, Integer tourneyId) {
 		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
 		try {
-			response.setEntity(solveRepository.save(solve));
+			solve.setDate(new Date());
+			solve = solveRepository.save(solve);
+			response.setEntity(solve);
 			response.setResponsetext("Solve saved!");
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);
+			if(tourneyId != null){
+				CMSolveTourney solveTourney = CMSolveTourney.builder()
+				.solveId(solve.getId())
+				.tourneyId(tourneyId).build();
+				solveTorneyRepository.save(solveTourney);
+			}
 		} catch (Exception e) {
 			response.setEntity(solve);
 			response.setResponsetext(e.toString());
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		}
-		return response;
+		return response; 
+	}
+
+	public List<CMSolves> findAllByTourneyId(Integer id){
+		List<Integer> ids = solveTorneyRepository.getSolvesIdsBytourneyId(id);
+		if (ids.size() == 0) return new ArrayList<CMSolves>();
+		return solveRepository.findAllByTourneyId(ids);
+		
 	}
 	
+	public List<CMSolves> findByCubeAndTourneyId(String cube,Integer id){
+		List<Integer> ids = solveTorneyRepository.getSolvesIdsBytourneyId(id);
+		if (ids.size() == 0) return new ArrayList<CMSolves>();
+		return solveRepository.findByCubeAndTourneyId(cube, ids);
+	}
 
-	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time, String cube){
+	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time, String cube, Integer tourneyId){
 		CMSolves solve = CMSolves.builder()
 		.userId(userId)
 		.time(time)
@@ -52,6 +80,12 @@ public class CMSolveService {
 			response.setEntity(solveRepository.save(solve));
 			response.setResponsetext("Solve saved!");
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);
+			if(tourneyId != null){
+				CMSolveTourney solveTourney = CMSolveTourney.builder()
+				.solveId(solve.getId())
+				.tourneyId(tourneyId).build();
+				solveTorneyRepository.save(solveTourney);
+			}
 		} catch (Exception e) {
 			response.setEntity(solve);
 			response.setResponsetext(e.toString());
@@ -93,8 +127,13 @@ public class CMSolveService {
 	}
 	
 	
-	public List<CMSolves> getSolveByUserAndCube(Integer userId, String cube){
-		List<CMSolves> list = solveRepository.findByUserIdAndCube(userId, cube);
+	public List<CMSolves> getSolveByUserAndCube(Integer userId, String cube, String order){
+		List<CMSolves> list;
+		if(order.equals(CommonConstants.ORDER_TIME)){
+			list = solveRepository.findByUserIdAndCubeOrderByTimeAsc(userId, cube);
+		}else {
+			list = solveRepository.findByUserIdAndCubeOrderByDateAsc(userId, cube);
+		}
 		return list;
 	}
 	

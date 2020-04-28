@@ -60,8 +60,8 @@ public class CMUserService {
 		.email(name + "@a.com")
 		.password(password)
 		.wcaId(wcaid)
-		.stateId(19)
-		.cityId(986)
+		.stateId(1)
+		.cityId(1)
 		.birthday(new Date())
 		.build();
 		user.setImage("avatar.png");

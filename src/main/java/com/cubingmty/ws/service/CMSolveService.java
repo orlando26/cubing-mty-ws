@@ -47,6 +47,7 @@ public class CMSolveService {
 		.plus2(false)
 		.date(new Date())
 		.build();
+		solve.setTimeStr("");
 		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
 		try {
 			response.setEntity(solveRepository.save(solve));
@@ -98,6 +99,11 @@ public class CMSolveService {
 		return list;
 	}
 	
+	public CMSolves getBestSolveByUserAndCube(Integer userId, String cube){
+		CMSolves best = solveRepository.findTopByUserIdAndCubeOrderByTimeAsc(userId, cube);
+		return best;
+	}
+	
 	
 	public List<CMSolves> getByCubeOrderByTime(String cube){
 		List<CMSolves> list = solveRepository.findByCubeOrderByTimeAsc(cube);
@@ -112,6 +118,17 @@ public class CMSolveService {
 	
 	public List<CMSolves> findAllByOrderByTime() {
 		return solveRepository.findAllByOrderByTimeAsc();
+	}
+	
+	
+	public List<CMSolves> getByUserIdAndCubeOrderByTime(Integer userId, String cube){
+		List<CMSolves> list = solveRepository.findByUserIdAndCubeOrderByTimeAsc(userId, cube);
+		return list;
+	}
+	
+	public List<CMSolves> getByUserIdAndCubeOrderByDate(Integer userId, String cube){
+		List<CMSolves> list = solveRepository.findByUserIdAndCubeOrderByDateAsc(userId, cube);
+		return list;
 	}
 	
 }

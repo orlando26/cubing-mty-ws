@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import com.cubingmty.ws.entity.catalogs.CMRole;
+import com.cubingmty.ws.exceptions.EmptyValuesException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -93,7 +94,7 @@ public class CMUser {
 	@Transient
 	private String token;
 
-	public boolean checkEmpty(){
+	public void checkEmpty() throws EmptyValuesException{
 		if(name.equals("") || 
 			lastname.equals("") || 
 			nickname.equals("") || 
@@ -102,9 +103,7 @@ public class CMUser {
 			password.equals("") ||
 			stateId.equals(null) ||
 			cityId.equals(null) ||
-			birthday.equals(null) ) return true; 
-		
-		return false;
+			birthday.equals(null) ) throw new EmptyValuesException(); 
 	}
 
 }

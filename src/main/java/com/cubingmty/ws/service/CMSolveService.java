@@ -5,18 +5,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import com.cubingmty.ws.entity.CMSolveTourney;
 import com.cubingmty.ws.entity.CMSolves;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.repository.CMSolveTourneyRepository;
 import com.cubingmty.ws.repository.CMSolvesRepository;
 import com.cubingmty.ws.util.CommonConstants;
+import com.cubingmty.ws.util.UtilFunctions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CMSolveService {
@@ -32,7 +30,9 @@ public class CMSolveService {
 	
 	public StandardResponse<CMSolves> save(CMSolves solve, Integer tourneyId) {
 		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
+
 		try {
+			solve.checkTimeLimit();
 			solve.setDate(new Date());
 			solve = solveRepository.save(solve);
 			response.setEntity(solve);
@@ -75,8 +75,10 @@ public class CMSolveService {
 		.plus2(false)
 		.date(new Date())
 		.build();
+		solve.setTimeStr(UtilFunctions.parseTimeToString(time));
 		StandardResponse<CMSolves> response = new StandardResponse<CMSolves>();
 		try {
+			solve.checkTimeLimit();
 			response.setEntity(solveRepository.save(solve));
 			response.setResponsetext("Solve saved!");
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);
@@ -87,8 +89,8 @@ public class CMSolveService {
 				solveTorneyRepository.save(solveTourney);
 			}
 		} catch (Exception e) {
-			response.setEntity(solve);
-			response.setResponsetext(e.toString());
+			response.setEntity(null);
+			response.setResponsetext(e.getMessage() );
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		}
 		return response;

@@ -12,7 +12,7 @@ public class EmptyValuesException extends Exception{
     }
 
     public EmptyValuesException(){
-        super("Por favor llena todos los campos v:");
+        super("Por favor llena todos los campos v:!");
     }
 
 }

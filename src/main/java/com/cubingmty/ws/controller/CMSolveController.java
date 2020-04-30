@@ -101,7 +101,7 @@ public class CMSolveController {
 	@CrossOrigin
 	@GetMapping("/bestbyUserAndCube/{userId},{cube}")
 	@ApiOperation(value = "Find best solve by user and cube")
-	public CMSolves getBestSolveByUserAndCube(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
+	public List<CMSolves> getBestSolveByUserAndCube(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
 		return solveService.getBestSolveByUserAndCube(userId, cube);
 	}
 	

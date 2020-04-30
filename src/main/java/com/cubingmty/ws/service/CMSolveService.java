@@ -99,8 +99,8 @@ public class CMSolveService {
 		return list;
 	}
 	
-	public CMSolves getBestSolveByUserAndCube(Integer userId, String cube){
-		CMSolves best = solveRepository.findTopByUserIdAndCubeOrderByTimeAsc(userId, cube);
+	public List<CMSolves> getBestSolveByUserAndCube(Integer userId, String cube){
+		List<CMSolves> best = solveRepository.findTopByUserIdAndCubeOrderByTimeAsc(userId, cube);
 		return best;
 	}
 	

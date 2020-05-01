@@ -90,14 +90,14 @@ public class CMSolveController {
 	
 	@CrossOrigin
 	@GetMapping("/byUser/{userId}")
-	@ApiOperation(value = "Find a solve by user")
+	@ApiOperation(value = "List solves by user")
 	public List<CMSolves> getSolveByUser(@PathVariable("userId") Integer userId){
 		return solveService.getSolveByUser(userId);
 	}
 	
 	@CrossOrigin
 	@GetMapping("/byCube/{cube}")
-	@ApiOperation(value = "Find a solve by cube")
+	@ApiOperation(value = "List solves by cube")
 	public List<CMSolves> getSolveByCube(@PathVariable("cube") String cube){
 		return solveService.getSolveByCube(cube);
 	}
@@ -110,6 +110,13 @@ public class CMSolveController {
 												@PathVariable("cube") String cube, 
 												@RequestParam(defaultValue = "time") String order){
 		return solveService.getSolveByUserAndCube(userId, cube, order);
+	}
+	
+	@CrossOrigin
+	@GetMapping("/bestbyUserAndCube/{userId},{cube}")
+	@ApiOperation(value = "Find best solve by user and cube")
+	public List<CMSolves> getBestSolveByUserAndCube(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
+		return solveService.getBestSolveByUserAndCube(userId, cube);
 	}
 	
 	
@@ -127,6 +134,24 @@ public class CMSolveController {
 	public List<CMSolves> getByCubeOrderByDate(String cube){
 		return solveService.getByCubeOrderByDate(cube);
 	}
+	
+	
+	@CrossOrigin
+	@GetMapping("ByUserIdAndCubeOrderByTime/{userId},{cube}")
+	@ApiOperation(value = "List solves by user and cube sorted by time")
+	public List<CMSolves> getByUserIdAndCubeOrderByTime(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
+		return solveService.getByUserIdAndCubeOrderByTime(userId, cube);
+	}
+	
+	
+	@CrossOrigin
+	@GetMapping("ByUserIdAndCubeOrderByDate/{userId},{cube}")
+	@ApiOperation(value = "List solves by user and cube sorted by date")
+	public List<CMSolves> getByUserIdAndCubeOrderByDate(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
+		return solveService.getByUserIdAndCubeOrderByDate(userId, cube);
+	}
+	
+	
 
 
 

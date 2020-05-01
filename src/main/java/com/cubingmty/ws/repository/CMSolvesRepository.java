@@ -14,10 +14,6 @@ public interface CMSolvesRepository extends JpaRepository<CMSolves, Integer>{
 	
 	public List<CMSolves> findByCube(String cube);
 	
-	public List<CMSolves> findByUserIdAndCubeOrderByTimeAsc(Integer userId, String cube);
-
-	public List<CMSolves> findByUserIdAndCubeOrderByDateAsc(Integer userId, String cube);
-	
 	public List<CMSolves> findAllByOrderByTimeAsc();
 	
 	public List<CMSolves> findByCubeOrderByTimeAsc(String cube);
@@ -26,6 +22,12 @@ public interface CMSolvesRepository extends JpaRepository<CMSolves, Integer>{
 	
 	@Query(value = "select * from cm_solves where id in (:idsList) order by Time ", nativeQuery = true) 
 	public List<CMSolves> findAllByTourneyId(@Param("idsList") List<Integer> idsList);
+	
+	public List<CMSolves> findTopByUserIdAndCubeOrderByTimeAsc(Integer userId, String cube);
+	
+	public List<CMSolves> findByUserIdAndCubeOrderByTimeAsc(Integer userId, String cube);
+	
+	public List<CMSolves> findByUserIdAndCubeOrderByDateAsc(Integer userId, String cube);
 
 	@Query(value = "select * from cm_solves where cube = :cube and id in (:idsList) order by Time ", nativeQuery = true) 
 	public List<CMSolves> findByCubeAndTourneyId(@Param("cube") String cube ,@Param("idsList") List<Integer> idsList);

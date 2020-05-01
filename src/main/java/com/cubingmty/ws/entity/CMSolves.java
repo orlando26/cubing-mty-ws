@@ -46,6 +46,9 @@ public class CMSolves {
 	@Column(name="Time")
 	private Integer time;
 	
+	@Column(name="Time_Str")
+	private String timeStr;
+	
 	@Column(name = "Scramble")
 	private String scramble;
 	

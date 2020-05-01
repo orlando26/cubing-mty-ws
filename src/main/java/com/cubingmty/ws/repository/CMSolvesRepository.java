@@ -20,5 +20,11 @@ public interface CMSolvesRepository extends JpaRepository<CMSolves, Integer>{
 	public List<CMSolves> findByCubeOrderByTimeAsc(String cube);
 	
 	public List<CMSolves> findByCubeOrderByDateAsc(String cube);
+	
+	public List<CMSolves> findTopByUserIdAndCubeOrderByTimeAsc(Integer userId, String cube);
+	
+	public List<CMSolves> findByUserIdAndCubeOrderByTimeAsc(Integer userId, String cube);
+	
+	public List<CMSolves> findByUserIdAndCubeOrderByDateAsc(Integer userId, String cube);
 
 }

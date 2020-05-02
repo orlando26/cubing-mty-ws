@@ -34,6 +34,7 @@ public class CMSolveService {
 		try {
 			solve.checkTimeLimit();
 			solve.setDate(new Date());
+			solve.setTimeStr(UtilFunctions.parseTimeToString(solve.getTime()));
 			solve = solveRepository.save(solve);
 			response.setEntity(solve);
 			response.setResponsetext("Solve saved!");

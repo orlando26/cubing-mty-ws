@@ -34,15 +34,27 @@ public class CMSolveController {
 	
 	@CrossOrigin
 	@PostMapping("/saveSolve")
-	public StandardResponse<CMSolves> save(@Valid @RequestBody CMSolves solve){
-		return solveService.save(solve);
+	public StandardResponse<CMSolves> save(@Valid @RequestBody CMSolves solve, @RequestParam(required = false) Integer tourneyId){
+		return solveService.save(solve, tourneyId);
 	}
 
 	
 	@CrossOrigin
 	@PostMapping("/saveSolveUser")
-	public StandardResponse<CMSolves> saveTestSolve(@RequestParam Integer userId, @RequestParam Integer time, @RequestParam String cube){
-		return solveService.registerTestSolve(userId, time, cube);
+	public StandardResponse<CMSolves> saveTestSolve(@RequestParam Integer userId, @RequestParam Integer time, @RequestParam String cube, @RequestParam(required = false) Integer tourneyId){
+		return solveService.registerTestSolve(userId, time, cube, tourneyId);
+	}
+
+	@CrossOrigin
+	@GetMapping("/byTourney/{tourneyId}")
+	public List<CMSolves> findAllByTourneyId(@PathVariable(name = "tourneyId") Integer tourneyId){
+		return solveService.findAllByTourneyId(tourneyId);
+	}
+
+	@CrossOrigin
+	@GetMapping("/cube/{cube}/tourney/{tourneyId}")
+	public List<CMSolves> findByCubeAndTourneyId(@PathVariable(name = "cube") String cube, @PathVariable(name = "tourneyId") Integer tourneyId){
+		return solveService.findByCubeAndTourneyId(cube, tourneyId);
 	}
 
 	@CrossOrigin
@@ -92,10 +104,12 @@ public class CMSolveController {
 	
 	
 	@CrossOrigin
-	@GetMapping("/byUserAndCube/{userId},{cube}")
-	@ApiOperation(value = "List solves by user and cube")
-	public List<CMSolves> getSolveByUserAndCube(@PathVariable("userId") Integer userId, @PathVariable("cube") String cube){
-		return solveService.getSolveByUserAndCube(userId, cube);
+	@GetMapping("/byUser/{userId}/cube/{cube}")
+	@ApiOperation(value = "Find a solve by user and cube")
+	public List<CMSolves> getSolveByUserAndCube(@PathVariable("userId") Integer userId,
+												@PathVariable("cube") String cube, 
+												@RequestParam(defaultValue = "time") String order){
+		return solveService.getSolveByUserAndCube(userId, cube, order);
 	}
 	
 	@CrossOrigin

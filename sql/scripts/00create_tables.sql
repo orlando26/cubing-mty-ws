@@ -58,6 +58,7 @@ CREATE TABLE `cm_solves` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Id_User` int(11) NOT NULL,
   `Time` int(11) NOT NULL,
+  `Time_Str` varchar(10) NOT NULL, 
   `Scramble` varchar(100) NOT NULL,
   `Cube` varchar(20) NOT NULL,
   `DNF` char(1) NOT NULL DEFAULT 'N',

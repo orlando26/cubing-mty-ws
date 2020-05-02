@@ -5,18 +5,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
+import com.cubingmty.ws.entity.AuthRequest;
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.entity.catalogs.CMRole;
-import com.cubingmty.ws.exceptions.EmptyValuesException;
+import com.cubingmty.ws.jwt.JwtTokenProvider;
 import com.cubingmty.ws.repository.CMUserRepository;
 import com.cubingmty.ws.util.CommonConstants;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CMUserService {
@@ -26,6 +29,12 @@ public class CMUserService {
 	
 	@Autowired
 	private CMUserRepository userRepository;
+
+	@Autowired
+	private JwtTokenProvider tokenProvider;
+
+	@Autowired
+	AuthenticationManager authManager;
 	
 	public StandardResponse<CMUser> save(CMUser user) {
 		user.setImage("avatar.png");
@@ -34,7 +43,7 @@ public class CMUserService {
 		user.setRoles(roles);
 		StandardResponse<CMUser> response = new StandardResponse<CMUser>();
 		try {
-			if(user.checkEmpty()) throw new EmptyValuesException();
+			user.checkEmpty();
 
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			response.setEntity(userRepository.save(user));
@@ -49,6 +58,32 @@ public class CMUserService {
 			response.setResponsetext(e.getMessage());
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		}
+		return response;
+	}
+
+	public StandardResponse<CMUser> authenticate(AuthRequest auth){
+		StandardResponse<CMUser> response = new StandardResponse<>();
+		try{
+			auth.checkEmpty();
+			UsernamePasswordAuthenticationToken authenticationToken = 
+			new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword());
+			authManager.authenticate(authenticationToken);
+			CMUser user = findByEmail(authenticationToken.getName()); 
+			user.setToken(tokenProvider.generateToken(authenticationToken)); 
+
+			response.setEntity(user);
+			response.setStatus(CommonConstants.RESPONSE_SUCCESS);
+			response.setResponsetext("Authenticated");
+		} catch(BadCredentialsException e) {
+			response.setEntity(null);
+			response.setStatus(CommonConstants.RESPONSE_ERROR);
+			response.setResponsetext("Usuario o password incorrecto");
+		} catch (Exception e) {
+			response.setEntity(null);
+			response.setResponsetext(e.getMessage());
+			response.setStatus(CommonConstants.RESPONSE_ERROR);
+		}
+
 		return response;
 	}
 

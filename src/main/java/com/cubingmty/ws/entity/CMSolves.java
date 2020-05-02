@@ -10,6 +10,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.Type;
 
+import com.cubingmty.ws.exceptions.TimeLimitException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Builder;
@@ -45,7 +46,7 @@ public class CMSolves {
 	 
 	@Column(name="Time")
 	private Integer time;
-	
+
 	@Column(name="Time_Str")
 	private String timeStr;
 	
@@ -65,5 +66,9 @@ public class CMSolves {
 	
 	@Column(name = "Date")
 	private Date date;
+
+	public void checkTimeLimit() throws TimeLimitException{
+		if ( time > 3599999) throw new TimeLimitException();
+	}
 
 }

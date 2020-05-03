@@ -69,8 +69,8 @@ public class CMSolveService {
 	public StandardResponse<CMSolves> registerTestSolve(Integer userId, Integer time, String cube, Integer tourneyId){
 		CMSolves solve = CMSolves.builder()
 		.userId(userId)
-		.time(time)
-		.scramble("U B D")
+		.time(time) 
+		.scramble("D' F2 D2 R2 U L2 U' L2 F2 U2 R2 F' U B2 D R' F U2 F R2 D")
 		.cube(cube)
 		.dnf(true)
 		.plus2(false)

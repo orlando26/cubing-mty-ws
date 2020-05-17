@@ -23,9 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	private CMUserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		CMUser user = userRepository.findByEmail(username).orElse(null);
-		if(user == null) throw new UsernameNotFoundException(username);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		CMUser user = userRepository.findByEmail(email).orElse(null);
+		if(user == null) throw new UsernameNotFoundException(email);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
 		for (CMRole role : user.getRoles()) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS cm_state(
 	Abbrev VARCHAR(10) NOT NULL,
 
 	primary key(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS cm_city(
 	Id int not null auto_increment,
@@ -22,11 +22,13 @@ CREATE TABLE IF NOT EXISTS cm_city(
 	FOREIGN KEY(Id_State) REFERENCES cm_state(Id),
 
 	PRIMARY KEY(Id)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `cm_user` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
+  `Lastname` varchar(50) NOT NULL,
+  `Nickname` varchar(50) NOT NULL,
   `WCAID` varchar(150) NOT NULL,
   `Email` varchar(50) NOT NULL,
   `State_Id` int NOT NULL,
@@ -37,6 +39,7 @@ CREATE TABLE `cm_user` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `cm_user_idx_1` (`Email`),
   UNIQUE KEY `cm_user_idx_2` (`WCAID`),
+  UNIQUE KEY `cm_user_idx_3` (`Nickname`),
   CONSTRAINT `cm_user_ibfk_1` FOREIGN KEY (`State_Id`) REFERENCES `cm_state` (`Id`),
   CONSTRAINT `cm_user_ibfk_2` FOREIGN KEY (`City_Id`) REFERENCES `cm_city` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -55,6 +58,7 @@ CREATE TABLE `cm_solves` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Id_User` int(11) NOT NULL,
   `Time` int(11) NOT NULL,
+  `Time_Str` varchar(10) NOT NULL, 
   `Scramble` varchar(100) NOT NULL,
   `Cube` varchar(20) NOT NULL,
   `DNF` char(1) NOT NULL DEFAULT 'N',

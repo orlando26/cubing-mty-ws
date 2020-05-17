@@ -8,9 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import org.hibernate.annotations.Type;
+
+import com.cubingmty.ws.exceptions.TimeLimitException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Builder;
 import lombok.Data;
@@ -32,22 +33,27 @@ public class CMSolves {
 		this.plus2 = plus2;
 		this.date = date;
 	}
-
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Id")
 	private Integer id;
 
+
 	@Column(name = "Id_User")
 	private Integer userId;
 	 
-	@Column(name="time")
+	@Column(name="Time")
 	private Integer time;
+
+	@Column(name="Time_Str")
+	private String timeStr;
 	
-	@Column(name = "scramble")
+	@Column(name = "Scramble")
 	private String scramble;
 	
-	@Column(name = "cube")
+	@Column(name = "Cube")
 	private String cube;
 	
 	@Column(name = "DNF")
@@ -58,9 +64,11 @@ public class CMSolves {
 	@Type(type = "yes_no")
 	private Boolean plus2;
 	
-	@Column(name = "date")
+	@Column(name = "Date")
 	private Date date;
 
-	
+	public void checkTimeLimit() throws TimeLimitException{
+		if ( time > 3599999) throw new TimeLimitException();
+	}
 
 }

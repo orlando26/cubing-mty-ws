@@ -15,11 +15,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import com.cubingmty.ws.entity.catalogs.CMRole;
+import com.cubingmty.ws.exceptions.EmptyValuesException;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import com.cubingmty.ws.entity.catalogs.CMRole;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +34,10 @@ import lombok.NoArgsConstructor;
 public class CMUser {
 
 	@Builder()
-	public CMUser(String name, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
+	public CMUser(String name, String lastname, String nickname, String wcaId, String email, Integer stateId, Date birthday, Integer cityId, String password) {
 		this.name = name;
+		this.lastname = lastname;
+		this.nickname = nickname;
 		this.wcaId = wcaId;
 		this.email = email;
 		this.stateId = stateId;
@@ -48,15 +52,19 @@ public class CMUser {
 	private Integer id;
 
 	@Column(name = "Name")
-	@NotBlank(message = "Name is mandatory")
 	private String name;
 
+	@Column(name = "Lastname")
+	private String lastname;
+	
+	@Column(name = "Nickname", unique = true)
+	private String nickname;
+
+	
 	@Column(name = "WCAID", unique = true)
-	@NotBlank(message = "wcaId is mandatory")
 	private String wcaId;
 
 	@Column(name = "Email", unique = true)
-	@NotBlank(message = "Email is mandatory")
 	private String email;
 
 	@Column(name = "State_Id")
@@ -65,6 +73,7 @@ public class CMUser {
 	@Column(name = "City_Id")
 	private Integer cityId;
 
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@Column(name = "Birthday")
 	private Date birthday;
 
@@ -72,7 +81,6 @@ public class CMUser {
 	private String image;
 
 	@Column(name = "Password")
-	@NotBlank(message = "password is mandatory")
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -85,5 +93,17 @@ public class CMUser {
 
 	@Transient
 	private String token;
+
+	public void checkEmpty() throws EmptyValuesException{
+		if(name.equals("") || 
+			lastname.equals("") || 
+			nickname.equals("") || 
+			email.equals("") ||
+			wcaId.equals("") ||
+			password.equals("") ||
+			stateId.equals(null) ||
+			cityId.equals(null) ||
+			birthday.equals(null) ) throw new EmptyValuesException(); 
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.cubingmty.ws.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,6 +50,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.cors().and().authorizeRequests()
 				// Las vistas públicas no requieren autenticación
 				.antMatchers("/api/v1/**", "/catalog/**").permitAll()
+
+				.antMatchers("/css/**", "/js/**").permitAll()
 				// Swagger
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/resources/**", "/swagger-resources/**",
 						"/configuration/security", "/swagger-ui.html", "/webjars/**")

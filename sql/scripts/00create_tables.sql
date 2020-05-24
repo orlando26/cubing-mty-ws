@@ -35,7 +35,7 @@ CREATE TABLE `cm_user` (
   `City_Id` int NOT NULL,
   `Birthday` DATETIME NOT NULL,
   `Password` varchar(100) NOT NULL,
-  `Img` varchar(150) DEFAULT NULL,
+  `Img` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `cm_user_idx_1` (`Email`),
   UNIQUE KEY `cm_user_idx_2` (`WCAID`),

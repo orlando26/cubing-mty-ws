@@ -1,5 +1,6 @@
 package com.cubingmty.ws.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,9 @@ import com.cubingmty.ws.jwt.JwtTokenProvider;
 import com.cubingmty.ws.repository.CMUserRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +24,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CMUserService {
@@ -119,6 +126,24 @@ public class CMUserService {
 			response.setStatus(CommonConstants.RESPONSE_ERROR);
 		}
 		return response;
+	}
+	
+	public boolean pictureupload(Integer id, MultipartFile file) {
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("data:image/png;base64,");
+			sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(file.getBytes(), false)));
+			String imageBase64 = sb.toString();
+			CMUser user = userRepository.getOne(id);
+			user.setImage(imageBase64);
+			userRepository.save(user);
+			return true;
+		}
+		catch (IOException e) {
+			LoggerFactory.getLogger(this.getClass()).error("pictureupload", e);
+			return false;
+		}
+
 	}
 	
 	public CMUser findByEmail(String email) {

@@ -1,21 +1,13 @@
 package com.cubingmty.ws.controller;
 
-import java.security.Principal;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
-import com.cubingmty.ws.entity.AuthRequest;
-import com.cubingmty.ws.entity.CMUser;
-import com.cubingmty.ws.entity.StandardResponse;
-import com.cubingmty.ws.jwt.JwtTokenProvider;
-import com.cubingmty.ws.service.CMUserService;
-import com.cubingmty.ws.util.CommonConstants;
-
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cubingmty.ws.entity.AuthRequest;
+import com.cubingmty.ws.entity.CMUser;
+import com.cubingmty.ws.entity.StandardResponse;
+import com.cubingmty.ws.service.CMUserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +35,7 @@ public class CMUserController {
 	@Autowired
 	private CMUserService userService;
 
-	
+
 
 	@CrossOrigin
 	@PostMapping("/registration")
@@ -79,5 +77,12 @@ public class CMUserController {
 	@ApiOperation(value = "delete a user by its Id")
 	public void delete(@PathVariable("id") Integer id) {
 		userService.delete(id);
+	}
+
+	@CrossOrigin
+	@PostMapping("/uploadImg/{id}")
+	public boolean pictureupload(@PathVariable(name = "id") Integer id, @RequestParam("image") MultipartFile file) {
+		return userService.pictureupload(id, file);
+
 	}
 }

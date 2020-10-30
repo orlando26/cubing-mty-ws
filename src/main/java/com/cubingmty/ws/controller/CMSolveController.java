@@ -1,9 +1,12 @@
 package com.cubingmty.ws.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
+
+import com.cubingmty.ws.entity.CMSolves;
+import com.cubingmty.ws.entity.StandardResponse;
+import com.cubingmty.ws.service.CMSolveService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,16 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cubingmty.ws.entity.CMSolves;
-import com.cubingmty.ws.entity.StandardResponse;
-import com.cubingmty.ws.service.CMSolveService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 
 @RestController
 @RequestMapping("/api/v1/solve")
 @Api(tags = "Solve API", value = "SolveApi", description = "solve controller api")
+@ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
 public class CMSolveController {
 
 	@Autowired

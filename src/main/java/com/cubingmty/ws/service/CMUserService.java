@@ -9,7 +9,7 @@ import com.cubingmty.ws.entity.AuthRequest;
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
 import com.cubingmty.ws.entity.catalogs.CMRole;
-import com.cubingmty.ws.jwt.JwtTokenProvider;
+import com.cubingmty.ws.jwt.JwtTokenUtil;
 import com.cubingmty.ws.repository.CMUserRepository;
 import com.cubingmty.ws.util.CommonConstants;
 
@@ -18,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,13 @@ public class CMUserService {
 	private CMUserRepository userRepository;
 
 	@Autowired
-	private JwtTokenProvider tokenProvider;
+	private JwtTokenUtil tokenUtil;
 
 	@Autowired
 	AuthenticationManager authManager;
+
+	@Autowired
+	UserDetailsServiceImpl userDetailService;
 	
 	public StandardResponse<CMUser> save(CMUser user) {
 		user.setImage("avatar.png");
@@ -69,7 +73,8 @@ public class CMUserService {
 			new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword());
 			authManager.authenticate(authenticationToken);
 			CMUser user = findByEmail(authenticationToken.getName()); 
-			user.setToken(tokenProvider.generateToken(authenticationToken)); 
+			UserDetails userDetails = userDetailService.loadUserByUsername(auth.getUsername());
+			user.setToken(tokenUtil.generateToken(userDetails)); 
 
 			response.setEntity(user);
 			response.setStatus(CommonConstants.RESPONSE_SUCCESS);

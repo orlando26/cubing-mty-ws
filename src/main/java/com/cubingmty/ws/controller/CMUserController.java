@@ -1,21 +1,13 @@
 package com.cubingmty.ws.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import com.cubingmty.ws.entity.AuthRequest;
 import com.cubingmty.ws.entity.CMUser;
 import com.cubingmty.ws.entity.StandardResponse;
-import com.cubingmty.ws.jwt.JwtTokenProvider;
 import com.cubingmty.ws.service.CMUserService;
-import com.cubingmty.ws.util.CommonConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -37,13 +30,11 @@ public class CMUserController {
 	@Autowired
 	private CMUserService userService;
 
-	
-
 	@CrossOrigin
 	@PostMapping("/registration")
-	@ApiOperation(value = "Creates a user")
+	@ApiOperation(value = "Creates a user", authorizations = @Authorization(value = "Bearer"))
 	public StandardResponse<CMUser> save(@RequestBody CMUser user){
-		return userService.save(user);
+		return userService.save(user); 
 	}
 
 	@CrossOrigin
